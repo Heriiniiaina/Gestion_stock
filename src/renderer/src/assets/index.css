@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    height: 768px;
+    max-height: 768px;
+    overflow: hidden;
+}
