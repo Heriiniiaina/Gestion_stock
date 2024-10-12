@@ -4,6 +4,8 @@ import { Button, TextField } from '@mui/material';
 import { Link } from 'react-router-dom';
 import * as XLSX from "xlsx"
 import e from 'cors';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import UpdateCustomer from '../components/UpdateCustomer';
 const Customers = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,6 +13,8 @@ const Customers = () => {
   const [searchTerm,setSearchTerm] = useState("")
   const [copyData,setCopyData] = useState([])
   const [exportData,setExportData] = useState([]) 
+  const [modal,setModal] = useState(false)
+  const [productData,setProductData] = useState({})
   //const [filterDate,setFilterData] = useState("")
   useEffect(() => {
     setSearchTerm("");
@@ -81,7 +85,7 @@ const Customers = () => {
             <th style={{ border: '1px solid #ddd', padding: '5px' }}>Prenom</th>
             <th style={{ border: '1px solid #ddd', padding: '5px' }}>Telephone</th>
             <th style={{ border: '1px solid #ddd', padding: '5px' }}>Email</th>
-          
+            <th style={{ border: '1px solid #ddd', padding: '5px' }}>Options</th>
           </tr>
         </thead>
         <tbody>
@@ -91,13 +95,24 @@ const Customers = () => {
               <td style={{ border: '1px solid #ddd', padding: '5px' }}>{item.prenom}</td>
               <td style={{ border: '1px solid #ddd', padding: '5px' }}>{item.telephone}</td>
               <td style={{ border: '1px solid #ddd', padding: '5px' }}>{item.email}</td>
-             
+              <td className='' style={{ border: '1px solid #ddd', padding: '5px' }}>
+                <div className='flex justify-center gap-3'>
+                  <button onClick={()=>{
+                    setModal(true)
+                    setProductData(item)
+                  }}><FaEdit/> </button>
+                  <button><FaTrash/> </button>
+
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
       </div>
-     
+      <div className={modal ? "absolute top-1/4" :"opacity-0" }>
+          <UpdateCustomer modal={modal} setModal={setModal} productData={productData}/>
+      </div>
     </div>
   );
 };

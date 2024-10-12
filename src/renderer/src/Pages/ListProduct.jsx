@@ -3,13 +3,16 @@ import axios from 'axios';
 import { Button, TextField } from '@mui/material';
 import { Link } from 'react-router-dom';
 import * as XLSX from "xlsx"
+import UpdateProduct from '../components/UpdateProduct';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 const ListProduct = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm,setSearchTerm] = useState("")
   const [copyData,setCopyData] = useState([])
-
+  const [modal,setModal] = useState(false)
+  const [productData,setProductData] = useState({})
   useEffect(() => {
     setSearchTerm("");
     setCopyData(data); 
@@ -74,6 +77,7 @@ const ListProduct = () => {
             <th style={{ border: '1px solid #ddd', padding: '5px' }}>Prix</th>
             <th style={{ border: '1px solid #ddd', padding: '5px' }}>Catégorie</th>
             <th style={{ border: '1px solid #ddd', padding: '5px' }}>Stock</th>
+            <th style={{ border: '1px solid #ddd', padding: '5px' }}>Options</th>
           </tr>
         </thead>
         <tbody>
@@ -84,12 +88,24 @@ const ListProduct = () => {
               <td style={{ border: '1px solid #ddd', padding: '5px' }}>{item.prix}</td>
               <td style={{ border: '1px solid #ddd', padding: '5px' }}>{item.category}</td>
               <td style={{ border: '1px solid #ddd', padding: '5px' }}>{item.stock}</td>
+              <td className='' style={{ border: '1px solid #ddd', padding: '5px' }}>
+                <div className='flex justify-center gap-3'>
+                  <button onClick={()=>{
+                    setModal(true)
+                    setProductData(item)
+                  }}><FaEdit/> </button>
+                  <button><FaTrash/> </button>
+
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
       </div>
-     
+      <div className={modal ? "absolute top-1/4" :"opacity-0" }>
+          <UpdateProduct modal={modal} setModal={setModal} productData={productData}/>
+      </div>
     </div>
   );
 };
