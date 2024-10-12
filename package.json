@@ -10,7 +10,8 @@
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
     "start": "electron-vite preview",
     "dev": "electron-vite dev",
-    "build": "electron-vite build",
+    "build": "npm run clean && electron-vite build",
+    "clean": "rimraf dist && rimraf out",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "npm run build && electron-builder --dir",
     "build:win": "npm run build && electron-builder --win",
@@ -25,6 +26,7 @@
     "@mui/material": "^6.1.2",
     "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "lucide-react": "^0.451.0",
@@ -47,7 +49,33 @@
     "prettier": "^3.3.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "rimraf": "^5.0.0",
     "tailwindcss": "^3.4.13",
     "vite": "^5.3.1"
+  },
+  "build": {
+    "appId": "com.example.app",
+    "productName": "Stock-Eo",
+    "files": [
+      "dist/",
+      "out/main/**",
+      "out/preload/**",
+      "out/renderer/**"
+    ],
+    "directories": {
+      "buildResources": "resources"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "resources/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "resources/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "resources/icon.png"
+    }
   }
 }

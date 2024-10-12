@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import {BrowserRouter,Routes,Route} from "react-router-dom"
+import {BrowserRouter,Routes,Route,HashRouter} from "react-router-dom"
 import Login from './Pages/Login'
 import Dashboard from './Pages/Dashboard'
 import AddProduct from './Pages/AddProduct'
@@ -9,6 +9,7 @@ import Home from './Pages/Home'
 import Logout from './Pages/Logout'
 import Customers from './Pages/Customers'
 import AddCustomer from './Pages/AddCustomer'
+import Register from './Pages/Register'
 
 function App() {
   
@@ -16,7 +17,7 @@ function App() {
 
   return (
     <>
-        <BrowserRouter>
+        <HashRouter>
           <Routes>
             <Route path='/' element={<Login/>}/>
             <Route path='/home' element={<Home/>}>
@@ -27,9 +28,10 @@ function App() {
                 <Route path='customers' element={<Customers/>} />
                 <Route path='addCustomers' element={<AddCustomer/>} />
             </Route>
+                <Route path='/register' element={<Register/>}/>
             <Route path='/logout' element={<Logout/>}/>
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
     </>
   )
 }

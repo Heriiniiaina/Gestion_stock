@@ -1,5 +1,6 @@
 import userDb from "../models/userModel.js"
 import bcrypt from "bcrypt"
+import bcryptjs from "bcryptjs"
 export const addUser =async (req,res,next)=>{
     const {username,nom,prenom,email,password} = req.body
     if(!username || !nom || !prenom || !email || !password )
@@ -7,6 +8,7 @@ export const addUser =async (req,res,next)=>{
             success:false,
             message:"Veilllez remplir le formulaire"
         })
+    const hasp = bcryptjs.hash(password,10)
     const hashedPassword =  await bcrypt.hash(password,10)
     const newUser = {username,nom,prenom,email,password: hashedPassword} 
     await userDb.findOne({username},(err,user)=>{
@@ -42,7 +44,7 @@ export const loginUser= async (req,res,next)=>{
                 success:false,
                 message:"User not found"
             })
-        const isPassword = await bcrypt.compare(password,user.password) 
+        const isPassword = await bcryptjs.compare(password,user.password) 
         if(!isPassword){
             return res.status(400).json({
                 success:false,

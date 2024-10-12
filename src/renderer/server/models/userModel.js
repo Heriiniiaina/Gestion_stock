@@ -1,5 +1,7 @@
 import Datastore from "nedb"
-
-const userDb = new Datastore({filename:"./data/users.db",autoload:true})
+import path from "path"
+import {app} from "electron"
+const dbpath = path.join(app.getPath("userData"),"data","users.db")
+const userDb = new Datastore({filename:dbpath,autoload:true})
 
 export default userDb
