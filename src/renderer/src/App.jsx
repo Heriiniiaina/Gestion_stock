@@ -10,6 +10,7 @@ import Logout from './Pages/Logout'
 import Customers from './Pages/Customers'
 import AddCustomer from './Pages/AddCustomer'
 import Register from './Pages/Register'
+import Category from './Pages/Category'
 
 function App() {
   
@@ -27,6 +28,7 @@ function App() {
                 <Route path='' element={<Dashboard/>}/>
                 <Route path='customers' element={<Customers/>} />
                 <Route path='addCustomers' element={<AddCustomer/>} />
+                <Route path='category' element={<Category/>}/>
             </Route>
                 <Route path='/register' element={<Register/>}/>
             <Route path='/logout' element={<Logout/>}/>

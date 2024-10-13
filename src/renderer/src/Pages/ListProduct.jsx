@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import * as XLSX from "xlsx"
 import UpdateProduct from '../components/UpdateProduct';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import Tri from '../components/Tri';
 const ListProduct = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -65,7 +66,7 @@ const ListProduct = () => {
         <div className='flex gap-4'>
           <Button sx={{backgroundColor:"#0e0e0e"}}  variant="contained" ><Link to={"/home/addProduct"}>+ Ajouter un produit</Link></Button>
           <Button sx={{outline:"black", color:"black", borderColor:"black"}} onClick={()=>exportToExcel()} variant="outlined">Export to excel</Button>
-
+          <Tri data={data} copyData={copyData} setCopyData={setCopyData}/>
         </div>
         </div>
        

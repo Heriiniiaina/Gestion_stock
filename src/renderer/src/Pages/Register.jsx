@@ -47,9 +47,9 @@ export default function Register() {
               <TextField onChange={e => setUsername(e.target.value)} required variant="outlined" label="username" sx={{ width: "100%" }} />
               <TextField onChange={e => setNom(e.target.value)} required variant="outlined" label="nom" sx={{ width: "100%" }} />
               <TextField onChange={e => setPrenom(e.target.value)} required variant="outlined" label="prenom" sx={{ width: "100%" }} />
-              <TextField onChange={e => setEmail(e.target.value)} required variant="outlined" label="nom" sx={{ width: "100%" }} />
+              <TextField onChange={e => setEmail(e.target.value)} required variant="outlined" label="Email" sx={{ width: "100%" }} />
               <TextField onChange={e => setPassword(e.target.value)} required label="mot de passe" variant="outlined" type="password" />
-              <Button sx={{ backgroundColor: "#0e0e0e" }} type="submit" variant="contained">Connecter</Button>
+              <Button sx={{ backgroundColor: "#0e0e0e" }} type="submit" variant="contained">S'inscrire</Button>
               <Typography >Vous avez déja encore de compte ? <Link to={"/"}>Cliquez ici</Link></Typography>
              </form>
           </div>

@@ -7,7 +7,7 @@ import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiMessageSquare, FiFolder, FiShoppingCart,FiUserPlus } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { createContext, useContext} from "react"
-import { BiAddToQueue } from "react-icons/bi";
+import { BiAddToQueue, BiCategory } from "react-icons/bi";
 import { LogOut } from "lucide-react";
 
 import Logo from "../assets/logo1.png"
@@ -19,8 +19,9 @@ export default function Sidebar() {
         {name:  "Ajout client", link:"/home/AddCustomers", icon:FiUserPlus},
         { name: "Ajout produits", link: "/home/addProduct", icon: BiAddToQueue},
         { name: "Liste Produits", link: "/home/listProduct", icon: FiFolder },
-        { name: "Achat", link: "/", icon: FiShoppingCart },
-        { name: "Doconnecter", link: "/logout", icon: LogOut },
+        {name:"Categorie", link: "/home/category",icon: BiCategory},
+        { name: "Achat", link: "/home/dashboard", icon: FiShoppingCart },
+        { name: "Déconnecter", link: "/logout", icon: LogOut },
       ];
       const [open, setOpen] = useState(true);
     return (

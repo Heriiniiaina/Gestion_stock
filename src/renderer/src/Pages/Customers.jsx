@@ -6,6 +6,7 @@ import * as XLSX from "xlsx"
 import e from 'cors';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import UpdateCustomer from '../components/UpdateCustomer';
+import TriCustom from '../components/TriCustom';
 const Customers = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -74,7 +75,7 @@ const Customers = () => {
         <div className='flex gap-4'>
           <Button sx={{backgroundColor:"#0e0e0e"}}  variant="contained" ><Link to={"/home/addCustomers"}>+ Ajouter un Client</Link></Button>
           <Button sx={{outline:"black", color:"black", borderColor:"black"}} onClick={()=>exportToExcel()} variant="outlined">Export to excel</Button>
-
+          <TriCustom data={data} copyData={copyData} setCopyData={setCopyData}/>
         </div>
         </div>
        

@@ -5,6 +5,8 @@ import Sidebar from "../components/Sidebar";
 const Home = () => {
 
   return (
+    <div>
+
     <section className="flex gap-6 w-full">
 
        <div className="w-2/12">
@@ -14,6 +16,7 @@ const Home = () => {
         <Outlet/>
       </div>
     </section>
+    </div>
   );
 };
 
