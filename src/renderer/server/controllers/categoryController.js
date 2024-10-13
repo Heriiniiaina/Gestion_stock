@@ -35,3 +35,18 @@ export const addCategory = async (req,res)=>{
     })
     
 }
+
+export const getAllCategory = async (req,res)=>{
+    categoryDb.find({},(err,category)=>{
+        if(err)
+            res.status(400).json({
+                success:false,
+                message:"Erreur base de donnéés"
+            })
+        res.status(200).json({
+            success:true,
+            message:"Reussi",
+            category
+        })
+    })
+}

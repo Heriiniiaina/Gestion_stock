@@ -6,6 +6,7 @@ import * as XLSX from "xlsx"
 import UpdateProduct from '../components/UpdateProduct';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import Tri from '../components/Tri';
+import AddCategory from '../components/AddCategory';
 const Category = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,6 +15,7 @@ const Category = () => {
   const [copyData,setCopyData] = useState([])
   const [modal,setModal] = useState(false)
   const [productData,setProductData] = useState({})
+  const [modalAddCat,setModalAddCat] = useState(false)
   useEffect(() => {
     setSearchTerm("");
     setCopyData(data); 
@@ -21,8 +23,8 @@ const Category = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/product/getAllProduct')
-        setData(response.data.products);
+        const response = await axios.get('http://localhost:8000/category/getAllCategory')
+        setData(response.data.category);
         setCopyData(data)
       } catch (err) {
         setError(err);
@@ -33,18 +35,13 @@ const Category = () => {
 
     fetchData();
   }, []);
-  const exportToExcel = (e)=>{
-    const worksheet = XLSX.utils.json_to_sheet(data)
-    const workbook = XLSX.utils.book_new()
-    XLSX.utils.book_append_sheet(workbook,worksheet,"Produits")
-    XLSX.writeFile(workbook,"ListeProduit.xlsx")
-  }
+
 
   const handleSearch = (e)=>{
       setSearchTerm(e.target.value)
       const filteredData = data.filter((item) => 
-        item.nom.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        item.designation.toLowerCase().includes(e.target.value.toLowerCase())
+        item.categoryName.toLowerCase().includes(e.target.value.toLowerCase()) 
+      
       );
       
       setCopyData(filteredData);
@@ -64,31 +61,23 @@ const Category = () => {
         <div className='flex justify-between w-full'>
         <TextField onChange={handleSearch} label="Rechercher un produit" />
         <div className='flex gap-4'>
-          <Button sx={{backgroundColor:"#0e0e0e"}}  variant="contained" ><Link to={"/home/addProduct"}>+ Ajouter un produit</Link></Button>
-          <Button sx={{outline:"black", color:"black", borderColor:"black"}} onClick={()=>exportToExcel()} variant="outlined">Export to excel</Button>
-          <Tri data={data} copyData={copyData} setCopyData={setCopyData}/>
+          <Button sx={{backgroundColor:"#0e0e0e"}} onClick={()=>setModalAddCat(true)} variant="contained" >+ Ajouter un categorie</Button>
+          
         </div>
         </div>
        
       <table style={{ borderCollapse: 'collapse', width: '100%' }}>
         <thead>
           <tr>
-            <th style={{ border: '1px solid #ddd', padding: '5px' }}>Nom</th>
-            <th style={{ border: '1px solid #ddd', padding: '5px' }}>Désignation</th>
-            <th style={{ border: '1px solid #ddd', padding: '5px' }}>Prix</th>
             <th style={{ border: '1px solid #ddd', padding: '5px' }}>Catégorie</th>
-            <th style={{ border: '1px solid #ddd', padding: '5px' }}>Stock</th>
             <th style={{ border: '1px solid #ddd', padding: '5px' }}>Options</th>
           </tr>
         </thead>
         <tbody>
           {copyData.map((item,index) => (
             <tr key={index}>
-              <td style={{ border: '1px solid #ddd', padding: '5px' }}>{item.nom}</td>
-              <td style={{ border: '1px solid #ddd', padding: '5px' }}>{item.designation}</td>
-              <td style={{ border: '1px solid #ddd', padding: '5px' }}>{item.prix}</td>
-              <td style={{ border: '1px solid #ddd', padding: '5px' }}>{item.category}</td>
-              <td style={{ border: '1px solid #ddd', padding: '5px' }}>{item.stock}</td>
+              <td style={{ border: '1px solid #ddd', padding: '5px' }}>{item.categoryName}</td>
+      
               <td className='' style={{ border: '1px solid #ddd', padding: '5px' }}>
                 <div className='flex justify-center gap-3'>
                   <button onClick={()=>{
@@ -106,6 +95,9 @@ const Category = () => {
       </div>
       <div className={modal ? "absolute top-1/4" :"opacity-0" }>
           <UpdateProduct modal={modal} setModal={setModal} productData={productData}/>
+      </div>
+      <div className={modalAddCat ? "absolute top-1/4" :"opacity-0" }>
+          <AddCategory modalAddCat={modalAddCat} setModalAddCat={setModalAddCat}/>
       </div>
     </div>
   );
