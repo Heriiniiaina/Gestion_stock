@@ -6,6 +6,9 @@ import * as XLSX from "xlsx"
 import UpdateProduct from '../components/UpdateProduct';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import Tri from '../components/Tri';
+import toast from 'react-hot-toast';
+import {confirmAlert} from "react-confirm-alert"
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 const ListProduct = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -50,6 +53,34 @@ const ListProduct = () => {
       setCopyData(filteredData);
   }
 
+
+  const deleteCategory = (id)=>{
+    axios.delete(`http://localhost:8000/product/delete/${id}`).then(res=>{
+     console.log(res)
+     toast.success(res.data.message)
+     window.location.reload()
+    }).catch(err=>{
+     console.log(err)
+    })
+ }
+
+ const handleDeleteClick = (id) => {
+   confirmAlert({
+     title: 'Confirmation',
+     message: 'Voulez vous supprimer cette catégorie ?',
+     buttons: [
+       {
+         label: 'Yes',
+         onClick: () => deleteCategory(id)
+       },
+       {
+         label: 'No',
+         onClick: () => {}
+       }
+     ]
+   });
+   
+ };
  
  
   if (loading) return <div>Loading...</div>;
@@ -95,7 +126,7 @@ const ListProduct = () => {
                     setModal(true)
                     setProductData(item)
                   }}><FaEdit/> </button>
-                  <button><FaTrash/> </button>
+                  <button onClick={()=>handleDeleteClick(item._id)}><FaTrash/> </button>
 
                 </div>
               </td>
@@ -104,7 +135,7 @@ const ListProduct = () => {
         </tbody>
       </table>
       </div>
-      <div className={modal ? "absolute top-1/4" :"opacity-0" }>
+      <div className={modal ? "fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50" : "hidden"}>
           <UpdateProduct modal={modal} setModal={setModal} productData={productData}/>
       </div>
     </div>
