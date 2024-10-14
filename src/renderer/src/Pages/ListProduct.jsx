@@ -56,7 +56,7 @@ const ListProduct = () => {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div className='flex flex-col items-center justify-center'>
+    <div className='flex flex-col items-center justify-center gap-5 py-5'>
       <div>
          <h2 className='text-3xl'>Liste des produits</h2>
       </div>
@@ -70,7 +70,7 @@ const ListProduct = () => {
         </div>
         </div>
        
-      <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+      <table style={{ borderCollapse: 'collapse', width: '100%' }} className="">
         <thead>
           <tr>
             <th style={{ border: '1px solid #ddd', padding: '5px' }}>Nom</th>

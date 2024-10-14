@@ -50,3 +50,23 @@ export const getAllCategory = async (req,res)=>{
         })
     })
 }
+export const deleteCategory = async(req,res)=>{
+    const id = req.params.id
+    categoryDb.remove({_id:id},{},(err,removed)=>{
+        if(err)
+            return res.status(400).json({
+                success:false,
+                message:"Erreur de suppression"
+            }) 
+        else if(removed==0)
+            return res.status(400).json({
+                success:false,
+                message:"Auccun donnéés à supprimer"  
+    })
+        res.status(200).json({
+            success:true,
+            message:"Category supprimer"
+
+        })
+    })
+}

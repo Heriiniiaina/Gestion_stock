@@ -7,6 +7,9 @@ import UpdateProduct from '../components/UpdateProduct';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import Tri from '../components/Tri';
 import AddCategory from '../components/AddCategory';
+import toast from 'react-hot-toast';
+import {confirmAlert} from "react-confirm-alert"
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 const Category = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -46,9 +49,33 @@ const Category = () => {
       
       setCopyData(filteredData);
   }
-
+  const deleteCategory = (id)=>{
+     axios.delete(`http://localhost:8000/category/delete/${id}`).then(res=>{
+      console.log(res)
+      toast.success(res.data.message)
+      window.location.reload()
+     }).catch(err=>{
+      console.log(err)
+     })
+  }
  
- 
+  const handleDeleteClick = (id) => {
+    confirmAlert({
+      title: 'Confirmation',
+      message: 'Voulez vous supprimer cette catégorie ?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => deleteCategory(id)
+        },
+        {
+          label: 'No',
+          onClick: () => {}
+        }
+      ]
+    });
+    
+  };
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
@@ -84,7 +111,7 @@ const Category = () => {
                     setModal(true)
                     setProductData(item)
                   }}><FaEdit/> </button>
-                  <button><FaTrash/> </button>
+                  <button onClick={()=>handleDeleteClick(item._id)}><FaTrash/> </button>
 
                 </div>
               </td>

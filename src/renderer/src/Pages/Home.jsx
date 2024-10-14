@@ -12,7 +12,7 @@ const Home = () => {
        <div className="w-2/12">
           <Sidebar/>
        </div>
-      <div className="m-3 text-xl text-gray-900 font-semibold w-10/12">
+      <div className="m-3 text-xl text-gray-900 font-semibold w-10/12 overflow-y-auto" style={{ maxHeight: '768px' }}>
         <Outlet/>
       </div>
     </section>
