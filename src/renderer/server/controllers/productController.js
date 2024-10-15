@@ -7,7 +7,8 @@ export const addProduct = async (req,res)=>{
             success:false,
             message:"Veuillez remplir le formulaire"
         })
-    const newProduct = {nom,prix,designation,category,stock}
+    
+    const newProduct = {nom,prix:Number(prix),designation,category,stock:Number(stock) }
     await productDb.insert(newProduct,(err,product)=>{
         res.status(200).json({
             success:true,

@@ -578,6 +578,10 @@ video {
   inset: 0px;
 }
 
+.bottom-4 {
+  bottom: 1rem;
+}
+
 .left-48 {
   left: 12rem;
 }
@@ -596,22 +600,6 @@ video {
 
 .top-2 {
   top: 0.5rem;
-}
-
-.bottom-0 {
-  bottom: 0px;
-}
-
-.bottom-1 {
-  bottom: 0.25rem;
-}
-
-.bottom-2 {
-  bottom: 0.5rem;
-}
-
-.bottom-4 {
-  bottom: 1rem;
 }
 
 .z-50 {
