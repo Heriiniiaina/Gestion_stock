@@ -10,7 +10,7 @@ import toast from 'react-hot-toast';
 import {confirmAlert} from "react-confirm-alert"
 import 'react-confirm-alert/src/react-confirm-alert.css'; 
 import TriParCategory from '../components/TriParCategory';
-import {CartContext} from "../context/CartContext.js"
+import {CartContext} from "../context/CartContext"
 const ListProduct = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,9 +19,9 @@ const ListProduct = () => {
   const [copyData,setCopyData] = useState([])
   const [modal,setModal] = useState(false)
   const [productData,setProductData] = useState({})
-  const {disptach} = useContext(CartContext)
+  const {dispatch} = useContext(CartContext)
   const handleAddToCart = (product)=>{
-    disptach({type:"ADD_TO_CART",payload:product})
+    dispatch({type:"ADD_TO_CART",payload:product})
   }
   useEffect(() => {
     setSearchTerm("");

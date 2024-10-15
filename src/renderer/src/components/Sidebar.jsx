@@ -20,7 +20,7 @@ export default function Sidebar() {
         { name: "Ajout produits", link: "/home/addProduct", icon: BiAddToQueue},
         { name: "Liste Produits", link: "/home/listProduct", icon: FiFolder },
          {name:"Categorie", link: "/home/category",icon: BiCategory},
-        { name: "Achat", link: "/home/dashboard", icon: FiShoppingCart },
+        { name: "Achat", link: "/home/purchase", icon: FiShoppingCart },
         { name: "Déconnecter", link: "/logout", icon: LogOut },
       ];
       const [open, setOpen] = useState(true);

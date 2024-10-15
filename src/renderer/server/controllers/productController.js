@@ -70,3 +70,30 @@ export const updateProduct = async (req,res)=>{
         })
     })
 }
+
+export const purchase=  (req, res) => {
+    const { products, totalPrice, date } = req.body;
+  
+    // Ajouter l'achat à la base de données d'achats
+    purchasesDb.insert({ products, totalPrice }, (err, newPurchase) => {
+      if (err) {
+        return res.status(500).json({ message: 'Erreur lors de l\'achat' });
+      }
+  
+      // Mise à jour des stocks des produits
+      products.forEach((purchasedProduct) => {
+        productsDb.update(
+          { _id: purchasedProduct._id },
+          { $inc: { stock: -1 } },  // Décrémenter le stock de 1
+          {},
+          (err) => {
+            if (err) {
+              return res.status(500).json({ message: 'Erreur lors de la mise à jour du stock' });
+            }
+          }
+        );
+      });
+  
+      res.status(200).json(newPurchase);
+    });
+  };
