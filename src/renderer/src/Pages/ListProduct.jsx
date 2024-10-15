@@ -9,6 +9,7 @@ import Tri from '../components/Tri';
 import toast from 'react-hot-toast';
 import {confirmAlert} from "react-confirm-alert"
 import 'react-confirm-alert/src/react-confirm-alert.css'; 
+import TriParCategory from '../components/TriParCategory';
 const ListProduct = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -98,6 +99,7 @@ const ListProduct = () => {
           <Button sx={{backgroundColor:"#0e0e0e"}}  variant="contained" ><Link to={"/home/addProduct"}>+ Ajouter un produit</Link></Button>
           <Button sx={{outline:"black", color:"black", borderColor:"black"}} onClick={()=>exportToExcel()} variant="outlined">Export to excel</Button>
           <Tri data={data} copyData={copyData} setCopyData={setCopyData}/>
+          <TriParCategory data={data} copyData={copyData} setCopyData={setCopyData}/>
         </div>
         </div>
        

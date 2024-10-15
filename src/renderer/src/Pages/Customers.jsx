@@ -7,6 +7,9 @@ import e from 'cors';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import UpdateCustomer from '../components/UpdateCustomer';
 import TriCustom from '../components/TriCustom';
+import {confirmAlert} from "react-confirm-alert"
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
+import toast from 'react-hot-toast';
 const Customers = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -58,16 +61,42 @@ const Customers = () => {
       
       setCopyData(filteredData);
   }
+  const deleteCategory = (id)=>{
+    axios.delete(`http://localhost:8000/client/delete/${id}`).then(res=>{
+     console.log(res)
+     toast.success(res.data.message)
+     window.location.reload()
+    }).catch(err=>{
+     console.log(err)
+    })
+ }
 
+ const handleDeleteClick = (id) => {
+   confirmAlert({
+     title: 'Confirmation',
+     message: 'Voulez vous supprimer cette client ?',
+     buttons: [
+       {
+         label: 'Yes',
+         onClick: () => deleteCategory(id)
+       },
+       {
+         label: 'No',
+         onClick: () => {}
+       }
+     ]
+   });
+   
+ };
  
  
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div className='flex flex-col items-center justify-center'>
+    <div className='flex flex-col items-center justify-center gap-5 py-5'>
       <div>
-         <h2 className='text-3xl'>Liste des produits</h2>
+         <h2 className='text-3xl'>Liste des clients</h2>
       </div>
       <div className='w-full flex flex-col gap-6'>
         <div className='flex justify-between w-full'>
@@ -102,7 +131,7 @@ const Customers = () => {
                     setModal(true)
                     setProductData(item)
                   }}><FaEdit/> </button>
-                  <button><FaTrash/> </button>
+                  <button onClick={()=>handleDeleteClick(item._id)}><FaTrash/> </button>
 
                 </div>
               </td>
@@ -111,7 +140,7 @@ const Customers = () => {
         </tbody>
       </table>
       </div>
-      <div className={modal ? "absolute top-1/4" :"opacity-0" }>
+      <div className={modal ? "fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50" : "hidden"}>
           <UpdateCustomer modal={modal} setModal={setModal} productData={productData}/>
       </div>
     </div>

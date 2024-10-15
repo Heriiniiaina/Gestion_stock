@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom"
 import toast from 'react-hot-toast'
 import loginPage from "../assets/page5.jpeg"
 import logo from "../assets/logo1.png"
+import Footer from '../components/Footer'
 export default function Login() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
@@ -46,6 +47,9 @@ export default function Login() {
               <Button sx={{ backgroundColor: "#0e0e0e" }} type="submit" variant="contained">Connecter</Button>
               <Typography >Vous n'avez pas encore de compte ? <Link to={"/register"}>Cliquez ici</Link></Typography>
             </form>
+          </div>
+          <div className='absolute bottom-4'>
+            <Footer/>
           </div>
         </div>
         <div className='w-1/2 h-full' >
