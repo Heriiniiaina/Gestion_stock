@@ -14,6 +14,7 @@ import {
     Paper,
     Autocomplete,
 } from '@mui/material';
+import toast from 'react-hot-toast';
 
 const Purchase = () => {
     const { state, dispatch } = useContext(CartContext);
@@ -31,6 +32,7 @@ const Purchase = () => {
     // État pour stocker les produits et leurs quantités
     const [productQuantities, setProductQuantities] = useState([]);
     const [productPurchased,setProductPurchased]= useState([])
+  
     useEffect(() => {
         const fetchClients = async () => {
             try {
@@ -92,10 +94,40 @@ const Purchase = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Informations du client:', clientInfo);
-        console.log('Quantités des produits:', productQuantities); // Affiche le tableau des quantités
-        setClientInfo({ nom: '', email: '', telephone: '' });
-    };
+        /*
+        const purchaseData = {
+          client: selectedClientId,
+          products: productQuantities.map(item => ({ productId: item._id, quantity: item.quantity })),
+          total: totalPrice
+        };
+        */
+        const purchaseData = cart.map(item => ({
+            _id: item._id,                // ID du produit
+            category: item.category,      // Catégorie du produit
+            designation: item.designation, // Désignation du produit
+            nom: item.nom,                // Nom du produit
+            prix: item.prix,              // Prix du produit
+            quantity: item.quantity,       // Quantité du produit
+            stock: item.stock              // Stock du produit
+        }));
+    
+        console.log('Données d\'achat à envoyer:', purchaseData);
+        axios.post('http://localhost:8000/product/purchase', {purchaseData})
+          .then((response) => {
+            console.log('Achat effectué:', response.data);
+            // Réinitialiser le panier et le formulaire
+            console.log(purchaseData)
+            console.log(cart)
+            setProductQuantities([]);
+            setClientInfo({ nom: '', email: '', telephone: '' });
+            toast.success('Achat effectué avec succès');
+            dispatch({ type: 'CLEAR_CART' });
+          })
+          .catch((error) => {
+            console.error('Erreur lors de l\'achat:', error);
+          });
+      };
+      
 
     return (
         <div className="p-6">
