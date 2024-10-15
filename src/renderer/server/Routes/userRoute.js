@@ -5,5 +5,6 @@ const router = e.Router()
 
 router.post("/addUser",addUser)
 router.post("/login",loginUser)
+
 export default router
 

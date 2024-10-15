@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import axios from 'axios';
 import { Button, TextField } from '@mui/material';
 import { Link } from 'react-router-dom';
 import * as XLSX from "xlsx"
 import UpdateProduct from '../components/UpdateProduct';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaCarAlt, FaEdit, FaTrash } from 'react-icons/fa';
 import Tri from '../components/Tri';
 import toast from 'react-hot-toast';
 import {confirmAlert} from "react-confirm-alert"
 import 'react-confirm-alert/src/react-confirm-alert.css'; 
 import TriParCategory from '../components/TriParCategory';
+import {CartContext} from "../context/CartContext.js"
 const ListProduct = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,6 +19,10 @@ const ListProduct = () => {
   const [copyData,setCopyData] = useState([])
   const [modal,setModal] = useState(false)
   const [productData,setProductData] = useState({})
+  const {disptach} = useContext(CartContext)
+  const handleAddToCart = (product)=>{
+    disptach({type:"ADD_TO_CART",payload:product})
+  }
   useEffect(() => {
     setSearchTerm("");
     setCopyData(data); 
@@ -129,7 +134,7 @@ const ListProduct = () => {
                     setProductData(item)
                   }}><FaEdit/> </button>
                   <button onClick={()=>handleDeleteClick(item._id)}><FaTrash/> </button>
-
+                  <button onClick={()=>handleAddToCart(item)}><FaCarAlt/></button>
                 </div>
               </td>
             </tr>
