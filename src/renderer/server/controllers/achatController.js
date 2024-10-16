@@ -17,3 +17,17 @@ export const addAchat = async(req,res)=>{
         })
     })
 }
+
+export const getAllAchat =async (req,res)=>{
+    achatsDb.find({},(err,achats)=>{
+        if(err)
+            return res.status(500).json({
+                success:false,
+                message:"Erreur serveur"
+            })
+        res.status(200).json({
+            success:true,
+            achats
+        })
+    })
+}

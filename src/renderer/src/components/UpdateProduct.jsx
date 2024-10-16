@@ -21,6 +21,7 @@ export default function UpdateProduct({ modal, setModal, productData }) {
       })
       .then((res) => {
         console.log(res);
+        window.location.reload()
       })
       .catch((err) => {
         console.log(err);

@@ -11,6 +11,7 @@ import { BiAddToQueue, BiCategory } from "react-icons/bi";
 import { LogOut } from "lucide-react";
 
 import Logo from "../assets/logo1.png"
+import { FaClipboardList, FaHistory, FaList, FaReceipt } from "react-icons/fa";
 
 export default function Sidebar() {
     const menus = [
@@ -18,9 +19,10 @@ export default function Sidebar() {
         { name: "Client", link: "/home/customers", icon: AiOutlineUser },
         {name:  "Ajout client", link:"/home/AddCustomers", icon:FiUserPlus},
         { name: "Ajout produits", link: "/home/addProduct", icon: BiAddToQueue},
-        { name: "Liste Produits", link: "/home/listProduct", icon: FiFolder },
+        { name: "Liste Produits", link: "/home/listProduct", icon: FaClipboardList },
          {name:"Categorie", link: "/home/category",icon: BiCategory},
-        { name: "Achat", link: "/home/purchase", icon: FiShoppingCart },
+        { name: "Vente", link: "/home/purchase", icon: FaReceipt },
+        { name: "List Vente", link: "/home/achats", icon: FaHistory },
         { name: "Déconnecter", link: "/logout", icon: LogOut },
       ];
       const [open, setOpen] = useState(true);

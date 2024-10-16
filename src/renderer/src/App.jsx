@@ -13,6 +13,7 @@ import Register from './Pages/Register'
 import Category from './Pages/Category'
 import Purchase from './Pages/Purchase'
 import { CartProvider } from './context/CartContext'
+import ListAchat from './Pages/ListAchat'
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
               <Route path='addCustomers' element={<AddCustomer />} />
               <Route path='category' element={<Category />} />
               <Route path='purchase' element={<Purchase />} />
+              <Route path='achats' element={<ListAchat/>} />
             </Route>
             <Route path='/register' element={<Register />} />
             <Route path='/logout' element={<Logout />} />

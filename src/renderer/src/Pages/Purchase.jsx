@@ -19,7 +19,7 @@ import toast from 'react-hot-toast';
 const Purchase = () => {
     const { state, dispatch } = useContext(CartContext);
     const { cart } = state;
-
+    const [montant, setMontant] = useState("0")
     const [clientInfo, setClientInfo] = useState({
         nom: '',
         email: '',
@@ -28,11 +28,11 @@ const Purchase = () => {
 
     const [clients, setClients] = useState([]);
     const [selectedClientId, setSelectedClientId] = useState(null);
-    
+
     // État pour stocker les produits et leurs quantités
     const [productQuantities, setProductQuantities] = useState([]);
-    const [productPurchased,setProductPurchased]= useState([])
-  
+    const [productPurchased, setProductPurchased] = useState([])
+
     useEffect(() => {
         const fetchClients = async () => {
             try {
@@ -53,8 +53,8 @@ const Purchase = () => {
 
     const handleUpdateQuantity = (productId, quantity) => {
         dispatch({ type: 'UPDATE_QUANTITY', payload: { _id: productId, quantity } });
-        
-       
+
+
         setProductQuantities((prev) => {
             const existingProduct = prev.find(item => item._id === productId);
             if (existingProduct) {
@@ -102,50 +102,50 @@ const Purchase = () => {
         };
         */
         const purchaseData = cart.map(item => ({
-            _id: item._id,                // ID du produit
-            category: item.category,      // Catégorie du produit
-            designation: item.designation, // Désignation du produit
-            nom: item.nom,                // Nom du produit
-            prix: item.prix,              // Prix du produit
-            quantity: item.quantity,       // Quantité du produit
-            stock: item.stock              // Stock du produit
+            _id: item._id,
+            category: item.category,
+            designation: item.designation,
+            nom: item.nom,
+            prix: item.prix,
+            quantity: item.quantity,
+            stock: item.stock
         }));
-        const acheter = cart.map((item)=>({
-            _id: item._id,                // ID du produit
-            category: item.category,      // Catégorie du produit
-            designation: item.designation, // Désignation du produit
-            nom: item.nom,                // Nom du produit
-            prix: item.prix,              // Prix du produit
-            quantity: item.quantity,       // Quantité du produit
-            stock: item.stock         
+        const acheter = cart.map((item) => ({
+            _id: item._id,
+            category: item.category,
+            designation: item.designation,
+            nom: item.nom,
+            prix: item.prix,
+            quantity: item.quantity,
+            stock: item.stock
         }))
         console.log('Données d\'achat à envoyer:', purchaseData);
-        axios.post('http://localhost:8000/product/purchase', {purchaseData})
-          .then((response) => {
-            console.log('Achat effectué:', response.data);
-            // Réinitialiser le panier et le formulaire
-            console.log(purchaseData)
-            console.log(cart)
-            setProductQuantities([]);
-            setClientInfo({ nom: '', email: '', telephone: '' });
-            toast.success('Achat effectué avec succès');
-            dispatch({ type: 'CLEAR_CART' });
-          })
-          .catch((error) => {
-            console.error('Erreur lors de l\'achat:', error);
-          });
-          axios.post("http://localhost:8000/achat/AddaChat",{produits:purchaseData,client:clientInfo,totalPrix:totalPrice}).then(res=>{
+        axios.post('http://localhost:8000/product/purchase', { purchaseData })
+            .then((response) => {
+                console.log('Achat effectué:', response.data);
+                // Réinitialiser le panier et le formulaire
+                console.log(purchaseData)
+                console.log(cart)
+                setProductQuantities([]);
+                setClientInfo({ nom: '', email: '', telephone: '' });
+                toast.success('Achat effectué avec succès');
+                dispatch({ type: 'CLEAR_CART' });
+            })
+            .catch((error) => {
+                console.error('Erreur lors de l\'achat:', error);
+            });
+        axios.post("http://localhost:8000/achat/AddaChat", { produits: purchaseData, client: clientInfo, totalPrix: totalPrice }).then(res => {
             console.log(res)
-          }).catch(error=>{
+        }).catch(error => {
             console.log(error)
-          })
-      };
-      
+        })
+    };
+
 
     return (
         <div className="p-6">
             <Typography variant="h4" gutterBottom>
-                Panier d'achat
+                Panier de vente
             </Typography>
 
             {/* Sélecteur de client avec Autocomplete */}
@@ -215,7 +215,7 @@ const Purchase = () => {
                             <TableRow key={item._id}>
                                 <TableCell>{item.nom}</TableCell>
                                 <TableCell>{item.designation}</TableCell>
-                                <TableCell>{item.prix} €</TableCell>
+                                <TableCell>{item.prix} MGA</TableCell>
                                 <TableCell>
                                     <input
                                         type="number"
@@ -236,19 +236,27 @@ const Purchase = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-          
-            <Typography variant="h6">
-                Total à payer : {totalPrice.toFixed(2)} MGA
-            </Typography>
-            <Typography variant="h6">
-                        Montant : 
-                        <TextField label="Montant payer" variant="outlined" />
-            </Typography>
-            <Typography variant="h6">
-                        Reste : 10000 
-                        
-            </Typography>
-            
+            <div className='flex flex-col gap-5'>
+                <Typography variant="h6" className='mb-2'>
+                    Total à payer : {totalPrice.toFixed(2)} MGA
+                </Typography>
+                <Typography variant="h6" className='flex items-center gap-2 mb-3 mt-4'>
+                    Montant :
+                    <div className='relative'>
+                        <label htmlFor="" className='absolute right-5'>MGA</label>
+                        <input type="number" className="outline" onChange={e => setMontant(e.target.value)} />
+                    </div>
+                </Typography>
+                <hr />
+                <Typography variant="h6">
+                    Reste : {(Number(montant) - totalPrice).toFixed(2)} MGA
+
+                </Typography>
+
+
+            </div>
+
+
         </div>
     );
 };
