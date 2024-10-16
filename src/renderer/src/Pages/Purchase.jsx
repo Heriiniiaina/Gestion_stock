@@ -110,7 +110,15 @@ const Purchase = () => {
             quantity: item.quantity,       // Quantité du produit
             stock: item.stock              // Stock du produit
         }));
-    
+        const acheter = cart.map((item)=>({
+            _id: item._id,                // ID du produit
+            category: item.category,      // Catégorie du produit
+            designation: item.designation, // Désignation du produit
+            nom: item.nom,                // Nom du produit
+            prix: item.prix,              // Prix du produit
+            quantity: item.quantity,       // Quantité du produit
+            stock: item.stock         
+        }))
         console.log('Données d\'achat à envoyer:', purchaseData);
         axios.post('http://localhost:8000/product/purchase', {purchaseData})
           .then((response) => {
@@ -126,6 +134,11 @@ const Purchase = () => {
           .catch((error) => {
             console.error('Erreur lors de l\'achat:', error);
           });
+          axios.post("http://localhost:8000/achat/AddaChat",{produits:purchaseData,client:clientInfo,totalPrix:totalPrice}).then(res=>{
+            console.log(res)
+          }).catch(error=>{
+            console.log(error)
+          })
       };
       
 
@@ -212,7 +225,7 @@ const Purchase = () => {
                                         className="border rounded p-1"
                                     />
                                 </TableCell>
-                                <TableCell>{(item.prix * item.quantity).toFixed(2)} €</TableCell>
+                                <TableCell>{(item.prix * item.quantity).toFixed(2)} MGA</TableCell>
                                 <TableCell>
                                     <Button onClick={() => handleRemoveFromCart(item._id)} color="secondary">
                                         Retirer
@@ -223,9 +236,19 @@ const Purchase = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
+          
             <Typography variant="h6">
-                Total des achats : {totalPrice.toFixed(2)} €
+                Total à payer : {totalPrice.toFixed(2)} MGA
             </Typography>
+            <Typography variant="h6">
+                        Montant : 
+                        <TextField label="Montant payer" variant="outlined" />
+            </Typography>
+            <Typography variant="h6">
+                        Reste : 10000 
+                        
+            </Typography>
+            
         </div>
     );
 };

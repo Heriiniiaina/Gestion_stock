@@ -4,7 +4,7 @@ import { Button, TextField } from '@mui/material';
 import { Link } from 'react-router-dom';
 import * as XLSX from "xlsx"
 import UpdateProduct from '../components/UpdateProduct';
-import { FaCarAlt, FaEdit, FaTrash } from 'react-icons/fa';
+import { FaCarAlt, FaCartPlus, FaEdit, FaTrash } from 'react-icons/fa';
 import Tri from '../components/Tri';
 import toast from 'react-hot-toast';
 import {confirmAlert} from "react-confirm-alert"
@@ -22,6 +22,7 @@ const ListProduct = () => {
   const {dispatch} = useContext(CartContext)
   const handleAddToCart = (product)=>{
     dispatch({type:"ADD_TO_CART",payload:product})
+    toast.success("Ajouter aux achats")
   }
   useEffect(() => {
     setSearchTerm("");
@@ -134,7 +135,7 @@ const ListProduct = () => {
                     setProductData(item)
                   }}><FaEdit/> </button>
                   <button onClick={()=>handleDeleteClick(item._id)}><FaTrash/> </button>
-                  <button onClick={()=>handleAddToCart(item)}><FaCarAlt/></button>
+                  <button onClick={()=>handleAddToCart(item)}><FaCartPlus/></button>
                 </div>
               </td>
             </tr>

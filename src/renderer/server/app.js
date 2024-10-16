@@ -3,6 +3,7 @@ import userRoute from "./Routes/userRoute.js"
 import clientRoute from "./Routes/clientRoute.js"
 import productRoute from "./Routes/productRoute.js"
 import categoryRoute from "./Routes/categoryRoute.js"
+import achatRoute from "./Routes/achatRoute.js"
 import cors from "cors"
 const app = express()
 
@@ -16,7 +17,7 @@ app.use("/user",userRoute)
 app.use("/client",clientRoute)
 app.use("/product",productRoute)
 app.use("/category",categoryRoute)
-
+app.use("/achat",achatRoute)
 app.listen(8000,()=>{
     console.log("Connected")
 })
