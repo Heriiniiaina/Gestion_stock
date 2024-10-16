@@ -7,6 +7,7 @@ export default function ListAchat() {
     const [achats,setAchtas] = useState([])
     const [modal,setModal] = useState(false)
     const [achat,setAchat] = useState({})
+    const [prixTotal,setPrixTotal] = useState(0)
     useEffect(()=>{
         axios.get("http://localhost:8000/achat/getAchat").then(res=>{
             setAchtas(res.data.achats)
@@ -39,6 +40,7 @@ export default function ListAchat() {
                   <button onClick={()=>{
                     setModal(true)
                     setAchat(item)
+                    setPrixTotal(item.hist.prix)
                   }} className='flex items-center text-sm  bg-slate-900 text-[#f82981] p-1 rounded-md'><FaInfoCircle/> Détails </button>
                 
                  
@@ -49,7 +51,7 @@ export default function ListAchat() {
         </tbody>
       </table>
       <div className={modal ? "block" :"opacity-0"}>
-          <AfficherDetails modal={modal} setModal={setModal} achat={achat}/>
+          <AfficherDetails modal={modal} setModal={setModal} prixTotal={prixTotal} achat={achat}/>
       </div>
     </div>
   )

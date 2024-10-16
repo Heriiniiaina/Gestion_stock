@@ -15,6 +15,7 @@ import {
     Autocomplete,
 } from '@mui/material';
 import toast from 'react-hot-toast';
+import Facture from '../components/Facture';
 
 const Purchase = () => {
     const { state, dispatch } = useContext(CartContext);
@@ -255,7 +256,9 @@ const Purchase = () => {
 
 
             </div>
-
+            <div className='absolute top-1/2 '>
+                <Facture clientInfo={clientInfo}/>
+            </div>
 
         </div>
     );

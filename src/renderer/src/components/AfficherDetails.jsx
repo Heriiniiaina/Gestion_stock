@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
 export default function AfficherDetails({ modal, setModal, achat,prixTotal }) {
-    console.log(achat);
+    
 
     const [produits, setProduits] = useState([]);
-
+    const  [prix,setPrix] = useState(0)
+   
     useEffect(() => {
         if (achat && achat.hist && Array.isArray(achat.hist.produits)) {
             setProduits(achat.hist.produits); // Mettre à jour avec le tableau de produits
@@ -38,7 +39,7 @@ export default function AfficherDetails({ modal, setModal, achat,prixTotal }) {
                                 <td style={{ border: '1px solid #ddd', padding: '5px' }}>{produit.prix}</td>
                                 <td style={{ border: '1px solid #ddd', padding: '5px' }}>{produit.category}</td>
                                 <td style={{ border: '1px solid #ddd', padding: '5px' }}>{produit.quantity}</td> 
-                                <td style={{ border: '1px solid #ddd', padding: '5px' }}>{Number(produit.prix)*Number(produit.quantity)}</td> 
+                                <td style={{ border: '1px solid #ddd', padding: '5px' }}>{Number(produit.prix*Number(produit.quantity))}</td> 
                             </tr>
                         ))}
                         
@@ -46,7 +47,7 @@ export default function AfficherDetails({ modal, setModal, achat,prixTotal }) {
                     <tfoot>
                         <tr>
                             <td className='text-center'  colSpan={2} style={{ border: '1px solid #ddd', padding: '5px' }}>Total</td>
-                            <td className='text-center' colSpan={4} style={{ border: '1px solid #ddd', padding: '5px' }}>{achat.hist.prix} MGA</td>
+                            <td className='text-center' colSpan={4} style={{ border: '1px solid #ddd', padding: '5px' }}>{prixTotal} MGA</td>
                         </tr>
                     </tfoot>
                        
