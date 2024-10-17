@@ -256,7 +256,7 @@ const Purchase = () => {
 
 
             </div>
-            <div className='absolute top-1/3 '>
+            <div className='absolute top-0 '>
                 <Facture clientInfo={clientInfo} cart={cart} totalPrice={totalPrice} montant={montant}/>
             </div>
 

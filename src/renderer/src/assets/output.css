@@ -614,6 +614,10 @@ video {
   top: 33.333333%;
 }
 
+.top-0 {
+  top: 0px;
+}
+
 .z-50 {
   z-index: 50;
 }
@@ -741,6 +745,10 @@ video {
 
 .w-screen {
   width: 100vw;
+}
+
+.border-collapse {
+  border-collapse: collapse;
 }
 
 .-translate-x-3 {
@@ -944,6 +952,10 @@ video {
 
 .p-6 {
   padding: 1.5rem;
+}
+
+.p-5 {
+  padding: 1.25rem;
 }
 
 .px-0 {

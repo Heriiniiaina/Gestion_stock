@@ -29,6 +29,8 @@
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.21.1",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.2",
     "lucide-react": "^0.451.0",
     "nedb": "^1.8.0",
     "react-confirm-alert": "^3.0.6",
