@@ -7,59 +7,73 @@ export default function Facture({ clientInfo, cart, totalPrice, montant }) {
 
   const exportToPdf = () => {
     const input = document.getElementById('facture-content');
-    
+  
     html2canvas(input, { scale: 2 }).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
-      const imgWidth = 190;
-      const pageHeight = 295;
-      const imgHeight = canvas.height * imgWidth / canvas.width;
-      let heightLeft = imgHeight;
-      let position = 10; 
-
+      const imgWidth = 190; // largeur de l'image dans le PDF
+      const pageHeight = 295; // hauteur d'une page A4
+      const imgHeight = (canvas.height * imgWidth) / canvas.width; // hauteur de l'image
+      let heightLeft = imgHeight; // reste à imprimer
+      let position = 10; // position d'ajout de l'image
+  
       pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
       heightLeft -= pageHeight;
-
+  
       while (heightLeft >= 0) {
         position = heightLeft - imgHeight;
         pdf.addPage();
         pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
       }
-
-    
-      pdf.save('facture.pdf');
-
-     
+  
+      // Enregistrer le PDF dans un Blob
       const pdfBlob = pdf.output('blob');
       const pdfUrl = URL.createObjectURL(pdfBlob);
-      window.open(pdfUrl); 
+  
+      // Ouvrir le PDF dans un nouvel onglet
+      const link = document.createElement('a');
+      link.href = pdfUrl;
+      link.target = '_blank'; // Ouvrir dans un nouvel onglet
+      link.download = 'facture.pdf'; // Nom du fichier à télécharger
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link); // Nettoyer le DOM
+    }).catch(error => {
+      console.error("Erreur lors de l'exportation en PDF:", error);
     });
   };
-
   
+
   const printFacture = () => {
     const printContent = document.getElementById('facture-content');
-    const WinPrint = window.open('', '', 'width=900,height=650');
-    WinPrint.document.write(`
-      <html>
-        <head>
-          <title>Facture</title>
-          <style>
-            body { font-family: Arial, sans-serif; }
-            table { width: 100%; border-collapse: collapse; }
-            th, td { border: 1px solid #000; padding: 8px; text-align: left; }
-            th { background-color: #f2f2f2; }
-          </style>
-        </head>
-        <body>${printContent.outerHTML}</body>
-      </html>
-    `);
-    WinPrint.document.close();
-    WinPrint.focus();
-    WinPrint.print();
-    WinPrint.close();
+    
+    // Vérifier si l'élément existe
+    if (printContent) {
+      const WinPrint = window.open('', '', 'width=900,height=650');
+      WinPrint.document.write(`
+        <html>
+          <head>
+            <title>Facture</title>
+            <style>
+              body { font-family: Arial, sans-serif; }
+              table { width: 100%; border-collapse: collapse; }
+              th, td { border: 1px solid #000; padding: 8px; text-align: left; }
+              th { background-color: #f2f2f2; }
+            </style>
+          </head>
+          <body>${printContent.outerHTML}</body>
+        </html>
+      `);
+      WinPrint.document.close();
+      WinPrint.focus();
+      WinPrint.print();
+      WinPrint.close();
+    } else {
+      console.error("L'élément avec l'ID 'facture-content' n'existe pas.");
+    }
   };
+  
 
   return (
     <div className='bg-slate-600 p-3 leading-loose'>
@@ -126,9 +140,7 @@ export default function Facture({ clientInfo, cart, totalPrice, montant }) {
         <Button onClick={exportToPdf} variant='contained' color='primary'>
           Exporter en PDF
         </Button>
-        <Button onClick={printFacture} variant='contained' color='secondary'>
-          Imprimer la facture
-        </Button>
+      
       </div>
     </div>
   );
